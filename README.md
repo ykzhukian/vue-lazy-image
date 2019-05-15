@@ -1,0 +1,1 @@
+#### Vue plugin for image lazy loading
