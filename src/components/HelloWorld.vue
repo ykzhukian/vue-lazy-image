@@ -1,36 +1,28 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <lazy-image src="https://via.placeholder.com/150" />
+    <div style="height:1000px;"></div>
+    <lazy-image src="https://via.placeholder.com/150" alt="image alt" />
+    <div style="height:1000px;"></div>
+    <lazy-image src="https://via.placeholder.com/150" alt="image alt" />
+    <div style="height:1000px;"></div>
+    <lazy-image src="https://via.placeholder.com/150" alt="image alt" />
+    <div style="height:1000px;"></div>
+    <lazy-image src="https://via.placeholder.com/150" alt="image alt" />
+    <div style="height:1000px;"></div>
+    <lazy-image src="https://via.placeholder.com/150" alt="image alt" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-@Component({
-  mounted() {
-  },
-})
+@Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
+  mounted() {
+    console.log('hello mounted');
+  }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

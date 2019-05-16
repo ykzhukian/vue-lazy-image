@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <img :src="src" :alt="alt" @click="changeValue" />
-    {{childValue}}
-    <child-text :value="childValue" :test="childValue"></child-text>
-  </div>
+  <img :alt="alt" :title="title" ref="lazyImg" />
 </template>
 
 <script lang="ts">
@@ -11,26 +7,41 @@ import {
   Component,
   Vue,
   Prop,
-  Provide,
 } from 'vue-property-decorator';
-import ChildText from './ChildText.vue';
 
-@Component({
-  components: {
-    ChildText,
-  },
-})
+@Component
 export default class LazyImage extends Vue {
   @Prop() private src!: string;
-
   @Prop() private alt!: string;
+  @Prop() private title!: string;
+  @Prop() private onload!: Function;
 
-  childValue: string = 'upupupup';
+  isElementInViewport(el: Element) {
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top >= 0
+        && rect.left >= 0
+        && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+        && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 
-  private name: string = 'lazy-image';
+  loadImage() {
+    const { lazyImg } : any = this.$refs;
+    if (this.isElementInViewport(lazyImg)) {
+      lazyImg.src = this.src;
+      lazyImg.onload = this.onload;
+      document.removeEventListener('scroll', this.loadImage);
+    }
+  }
 
-  changeValue() {
-    this.childValue = 'xxx';
+  mounted() {
+    this.loadImage();
+    document.addEventListener('scroll', this.loadImage);
+  }
+
+  beforeDestroy() {
+    document.removeEventListener('scroll', this.loadImage);
   }
 }
 </script>
