@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <lazy-image></lazy-image>
+    <lazy-image src="https://via.placeholder.com/150" />
   </div>
 </template>
 
